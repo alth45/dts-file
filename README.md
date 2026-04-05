@@ -1,6 +1,4 @@
-Sesuai permintaanmu, ini adalah file `README.md` sederhana yang bisa kamu simpan di folder latihanmu. File ini berisi catatan ringkas alur kerja (workflow) yang baru saja kita pelajari.
 
-```markdown
 # Latihan Membuat Device Tree (DTS)
 
 Repositori sederhana ini berisi catatan dasar cara membuat, mengompilasi, dan membongkar file Device Tree untuk keperluan kernel Linux.
@@ -34,11 +32,11 @@ dtc -I dtb -O dts -o hasil_bongkar.dts belajar.dtb
 - Gunakan `/dts-v1/;` di baris paling atas.
 - Root node selalu dimulai dengan `/ { ... };`.
 
----
-*Selamat belajar oprek hardware!*
-```
 
-### Cara Simpan:
+*Selamat belajar oprek hardware!*
+
+
+# Cara Simpan:
 1. Buka Notepad atau VS Code.
 2. Paste kode di atas.
 3. Simpan dengan nama `README.md` (pastikan ekstensinya `.md`).
