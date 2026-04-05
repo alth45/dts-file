@@ -1,38 +1,44 @@
 /dts-v1/;
-/{
-	model = "Belajar board v1.0";
-	compatible = "belajar,board-v1.0";
 
-	#adress-cells = <1>;
-	#size-cells = <1>;
+/ {
+    model = "Belajar Board V1";
+    compatible = "belajar,board-v1";
 
-	cpus {
-		cpu@0 {
-			device_type = "cpu";
-			reg = <0x0>; // cpu berada di index 0
-		};
-	};
+    #address-cells = <1>;
+    #size-cells = <1>;
 
-	memory @80000000 {
-		device_type = "memory";
-		reg = <0x80000000 0x10000000>; // memory mulai dari alamat 0x80000000 dengan ukuran 256MB
-	};
+    // Node CPU
+    cpus {
+        cpu@0 {
+            device_type = "cpu";
+            reg = <0x0>;
+        };
+    };
 
-	gpio0: gpio@40000000 {
-		compatible = "gpio";
-		reg = <0x40000000 0x1000>; // gpio mulai dari alamat 0x40000000 dengan ukuran 4KB
-		gpio-controller;
-		#gpio-cells = <2>; // 2 cell untuk nomor pin dan flags
-	};
+    // Node Memori (RAM)
+    memory@80000000 {
+        device_type = "memory";
+        reg = <0x80000000 0x10000000>;
+    };
 
+    // INI NODE BARU: GPIO Controller
+    gpio0: gpio@40000000 {
+        compatible = "belajar,gpio";
+        reg = <0x40000000 0x1000>; // Alamat fiktif GPIO
+        
+        gpio-controller;           // Wajib ada: Menandakan ini bosnya GPIO
+        #gpio-cells = <2>;         // Wajib ada: Format pin (1. Nomor Pin, 2. Status aktif)
+    };
 
-	leds {
-		compatible = "gpio-leds";
-		
-		lampu_indikator {
-			label = "led-biru";
-			gpios = <&gpio0 15 0>;
-			linux,default-trigger = "heartbeat"; //biar jedag jedug
-		};
-	};
+    // Node LED
+    leds {
+        compatible = "gpio-leds";
+        
+        lampu_indikator {
+            label = "led_biru";
+            // Sekarang &gpio0 sudah ada, jadi tidak akan error lagi
+            gpios = <&gpio0 15 0>; 
+            linux,default-trigger = "heartbeat";
+        };
+    };
 };
