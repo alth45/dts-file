@@ -21,6 +21,6 @@
 			label = "led-biru";
 			gpios = <&gpio0 15 0>;
 			linux,default-trigger = "heartbeat"; //biar jedag jedug
-		}
-	}
-}
+		};
+	};
+};
