@@ -16,20 +16,42 @@
         
         lampu_notifikasi {
             label = "led_merah";
-            gpios = <&soc_gpio 5 0>; // Mengambil rujukan dari file .dtsi
+            gpios = <&soc_gpio 5 0>; 
             linux,default-trigger = "timer";
         };
     };
-};
 
-// 4. KITA OVERRIDE (TIMPA) NILAI BAWAAN PABRIK
+    // --- PERBAIKAN 1: I2C DIMASUKKAN KE DALAM SINI ---
+    i2c@50000000 {
+        // PERBAIKAN 2: Spasi setelah koma dihapus
+        compatible = "pabrik,i2c-controller"; 
+        reg = <0x50000000 0x1000>;
+        
+        #address-cells = <1>;
+        #size-cells = <0>;
+        status = "okay";
 
-// Menimpa node RAM untuk memperbesar ukuran jadi 1GB
+        touchscreen@38 {
+            // PERBAIKAN 2: Spasi setelah koma dihapus
+            compatible = "focaltech,ft6236"; 
+            reg = <0x38>;
+
+            interrupt-parent = <&soc_gpio>; 
+            // PERBAIKAN 3: Dikembalikan pakai "interrupts"
+            interrupts = <21 2>; 
+
+            touchscreen-size-x = <720>;
+            touchscreen-size-y = <1280>;
+        };
+    };
+}; // <-- INI PENUTUP ROOT NODE ( / ) YANG BENAR
+
+// 4. KITA OVERRIDE (TIMPA) NILAI BAWAAN PABRIK (Selalu di luar Root)
+
 &{/memory@80000000} {
-    reg = <0x80000000 0x40000000>; // Ubah size dari 256MB jadi 1GB
+    reg = <0x80000000 0x40000000>; 
 };
 
-// Mengaktifkan GPIO yang tadinya "disabled" menjadi "okay"
 &soc_gpio {
     status = "okay";
 };
