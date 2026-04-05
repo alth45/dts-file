@@ -1,0 +1,26 @@
+/dts-v1/;
+/{
+	model = "Belajar board v1.0";
+	compatible = "belajar,board-v1.0";
+
+	#adress-cells = <1>;
+	#size-cells = <1>;
+
+	cpus {
+		cpu@0 {
+			device_type = "cpu";
+			reg = <0x0>; // cpu berada di index 0
+		};
+	};
+
+
+	leds {
+		compatible = "gpio-leds";
+		
+		lampu_indikator {
+			label = "led-biru";
+			gpios = <&gpio0 15 0>;
+			linux,default-trigger = "heartbeat"; //biar jedag jedug
+		}
+	}
+}
