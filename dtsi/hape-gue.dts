@@ -1,26 +1,35 @@
-/dts-v1/
+// File: hape-gue.dts (Ini file custom kita)
 
+/dts-v1/;
+
+// 1. KITA "PLEK KETIPLEK" (INCLUDE) FILE PABRIK
 /include/ "chipset-inti.dtsi"
 
+// 2. KITA TAMBAHKAN IDENTITAS BOARD KITA
 / {
-	model = "Hape gua pro";
-	compatible = "hapegua,pro", "chipset-inti";
-	leds {
-		compatible = "gpio-leds";
-		lampu-notifikasi {
-			label = "lampu-merah";
-			gpios = <&soc_gpio 5 0>;
-			linux,default-trigger = "timerr";
+    model = "Hape Gue Super Pro";
+    compatible = "hapegue,super-pro", "pabrik,chipset-inti";
 
-		};
-	};
+    // 3. KITA TAMBAHKAN NODE BARU (Lampu LED)
+    leds {
+        compatible = "gpio-leds";
+        
+        lampu_notifikasi {
+            label = "led_merah";
+            gpios = <&soc_gpio 5 0>; // Mengambil rujukan dari file .dtsi
+            linux,default-trigger = "timer";
+        };
+    };
 };
 
-//overide
-&{/memory@80000000}{
-	reg = <0x80000000 0x40000000>; // Upgrade RAM jadi 1Gb (0x40000000 = 1GB)
+// 4. KITA OVERRIDE (TIMPA) NILAI BAWAAN PABRIK
+
+// Menimpa node RAM untuk memperbesar ukuran jadi 1GB
+&{/memory@80000000} {
+    reg = <0x80000000 0x40000000>; // Ubah size dari 256MB jadi 1GB
 };
 
-&{/soc_gpio}{
-	status = "okay"; // Aktifkan GPIO bawaan pabrik
+// Mengaktifkan GPIO yang tadinya "disabled" menjadi "okay"
+&soc_gpio {
+    status = "okay";
 };
