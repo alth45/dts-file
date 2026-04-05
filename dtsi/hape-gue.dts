@@ -1,0 +1,26 @@
+/dts-v1/
+
+/include/ "chipset-inti.dtsi"
+
+/ {
+	model = "Hape gua pro";
+	compatible = "hapegua,pro", "chipset-inti";
+	leds {
+		compatible = "gpio-leds";
+		lampu-notifikasi {
+			label = "lampu-merah";
+			gpios = <&soc_gpio 5 0>;
+			linux,default-trigger = "timerr";
+
+		};
+	};
+};
+
+//overide
+&{/memory@80000000}{
+	reg = <0x80000000 0x40000000>; // Upgrade RAM jadi 1Gb (0x40000000 = 1GB)
+};
+
+&{/soc_gpio}{
+	status = "okay"; // Aktifkan GPIO bawaan pabrik
+};

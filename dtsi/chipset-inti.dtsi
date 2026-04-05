@@ -1,0 +1,28 @@
+// File: chipset-inti.dtsi (Jangan ubah nilai ini secara langsung)
+
+/ {
+    #address-cells = <1>;
+    #size-cells = <1>;
+
+    cpus {
+        cpu@0 {
+            device_type = "cpu";
+            reg = <0x0>; //index pertama
+            clock-frequency = <1000000000>; // Kecepatan bawaan 1GHz
+        };
+    };
+
+    memory@80000000 {
+        device_type = "memory";
+        reg = <0x80000000 0x10000000>; // RAM bawaan pabrik cuma 256MB
+    };
+
+    // GPIO Controller bawaan pabrik
+    soc_gpio: gpio@40000000 {
+        compatible = "pabrik,gpio-controller";
+        reg = <0x40000000 0x1000>;
+        gpio-controller;
+        #gpio-cells = <2>;
+        status = "disabled"; // Perhatikan: Bawaannya dimatikan (disabled)
+    };
+};
