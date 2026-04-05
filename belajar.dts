@@ -13,6 +13,18 @@
 		};
 	};
 
+	memory @80000000 {
+		device_type = "memory";
+		reg = <0x80000000 0x10000000>; // memory mulai dari alamat 0x80000000 dengan ukuran 256MB
+	}
+
+	gpio0: gpio@40000000 {
+		compatible = "gpio";
+		reg = <0x40000000 0x1000>; // gpio mulai dari alamat 0x40000000 dengan ukuran 4KB
+		gpio-controller;
+		#gpio-cells = <2>; // 2 cell untuk nomor pin dan flags
+	}
+
 
 	leds {
 		compatible = "gpio-leds";
